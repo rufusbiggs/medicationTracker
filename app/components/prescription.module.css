@@ -1,0 +1,41 @@
+.prescriptionContainer {
+    background-color: #C8E4E8;
+    border-radius: 10px;
+    margin: 1rem;
+    padding: 0.75rem;
+  }
+
+.topRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bottomRow {
+    margin-top: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.bottomLeft {
+    display: flex;
+    align-items: center;
+}
+
+.drugName {
+    font-weight: bold;
+    font-size: 1.3rem;
+  }
+
+.runsOut {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 5px
+}
+
+.total {
+    margin-left: 5px;
+}

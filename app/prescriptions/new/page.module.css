@@ -1,0 +1,46 @@
+.formContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+
+.inputContainer {
+    display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+}
+
+.label {
+    display: flex;
+    width: 100px;
+    justify-content: flex-end;
+}
+
+.input {
+    margin-left: 20px;
+    padding-left: 5px;
+    border: 1px solid #7D7C84;
+    border-radius: 5px;
+}
+
+.buttonContainer {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 1rem;
+}
+
+.submit {
+    background-color: #2D93AD;
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
+    width: 80px;
+}
+
+.cancel {
+    background-color: #7D7C84;
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
+    margin-left: 5px;
+}

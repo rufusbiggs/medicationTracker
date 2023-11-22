@@ -16,3 +16,25 @@ h1 {
   padding: 1rem;
   color: #21295C;
 }
+
+h3 { 
+  display: flex;
+  justify-content: center;
+  margin: 0 1rem;
+  font-size: 1.5rem;
+  background-color: #F46036;
+  color: white;
+  padding: 0 10px;
+  border-radius: 5px;
+}
+
+.edit-link {
+  position: absolute;
+  background-color: #2D93AD;
+  padding: 10px;
+  margin-left: 1rem;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: white;
+  border-radius: 5px;
+}

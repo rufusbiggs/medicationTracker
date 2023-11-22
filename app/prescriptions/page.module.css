@@ -1,0 +1,32 @@
+.prescriptionContainer {
+    background-color: #C8E4E8;
+    border-radius: 10px;
+    margin: 1rem;
+    padding: 0.75rem;
+    display:flex;
+    justify-content: space-between;
+  }
+
+.drugName {
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+.remove {
+    background-color: #7D7C84;
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
+    height: 30px;
+}
+
+.newLink {
+    position: absolute;
+    background-color: #2D93AD;
+    padding: 10px;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    font-weight: bold;
+    color: white;
+    border-radius: 5px;
+  }

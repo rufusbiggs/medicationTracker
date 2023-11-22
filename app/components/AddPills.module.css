@@ -5,3 +5,35 @@
     padding: 5px;
     border-radius: 4px;
 }
+
+.formContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.input {
+    border-radius: 4px;
+    margin-bottom: 5px;
+}
+
+.saveCancel { 
+    display: flex;
+    justify-content: right;
+    font-weight: bold;
+}
+
+.save {
+    background-color: #2D93AD;
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
+    width: 80px;
+}
+
+.cancel {
+    background-color: #7D7C84;
+    color: white;
+    padding: 4px;
+    border-radius: 4px;
+    margin-left: 5px;
+}

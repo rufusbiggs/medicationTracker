@@ -30,3 +30,10 @@
     color: white;
     border-radius: 5px;
   }
+
+.homeLink {
+  font-weight: bold;
+  font-size: 1.3rem;
+  padding-left: 1rem;
+  color: white;
+}

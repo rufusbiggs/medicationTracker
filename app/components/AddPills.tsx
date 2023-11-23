@@ -11,13 +11,17 @@ const AddPills = () => {
         setAddStock(toggleStock);
     }
 
+    const addPills = () => {
+        // increase stock by target.value in db
+    }
+
   return (
     <div className={styles.formContainer}>
         { (addStock) ? 
         <>
             <input className={styles.input} placeholder="Enter Amount"></input>
             <div className={styles.saveCancel}>
-                <button className={styles.save}>Add</button>
+                <button className={styles.save} onClick={addPills} >Add</button>
                 <button className={styles.cancel} onClick={toggleAddPills}>Cancel</button>
             </div>
         </>

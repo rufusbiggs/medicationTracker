@@ -1,9 +1,18 @@
 import React from 'react'
 import styles from './page.module.css'
+import Link from 'next/link'
 
 const newPrescription = () => {
+
+    const handleSubmit = () => {
+        // add prescription to db
+    }
+
   return (
     <div>
+        <nav>
+            <Link className={styles.homeLink} href='../'>&larr; Home</Link>
+        </nav>
         <h1>New Prescription</h1>
         <form className={styles.formContainer}>
             <div className={styles.inputContainer}>
@@ -24,7 +33,7 @@ const newPrescription = () => {
             </div>
         </form>
         <div className={styles.buttonContainer}>
-            <button type="submit" className={styles.submit}>Submit</button>
+            <button type="submit" className={styles.submit} onSubmit={handleSubmit}>Submit</button>
             <button className={styles.cancel}>Cancel</button>
         </div>
     </div>

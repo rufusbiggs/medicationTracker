@@ -13,6 +13,9 @@ const editPrescriptions = () => {
 
   return (
     <>
+      <nav>
+        <Link className={styles.homeLink} href='../'>&larr; Home</Link>
+      </nav>
       <h1>Prescriptions</h1>
       {data.map((drug, index) => {return (
         <div key={`prescription${index}`} className={styles.prescriptionContainer}>

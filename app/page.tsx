@@ -10,8 +10,7 @@ interface Prescription {
   name: string,
   dose: number,
   pillsPerDay: number,
-  stock: number,
-  prescribed: boolean
+  stock: number
 }
 
 export default function Home() {

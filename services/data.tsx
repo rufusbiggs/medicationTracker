@@ -4,8 +4,7 @@ interface Prescription {
     name: string,
     dose: number,
     pillsPerDay: number,
-    stock: number,
-    prescribed: boolean
+    stock: number
   }
 
 export const data : Prescription[] = [
@@ -13,28 +12,24 @@ export const data : Prescription[] = [
         name: 'Lacosamide',
         dose: 50,
         pillsPerDay: 4,
-        stock: 50,
-        prescribed: true
+        stock: 50
     },
     {
         name: 'Escitalopram',
         dose: 5,
         pillsPerDay: 1,
-        stock: 40,
-        prescribed: true
+        stock: 40
     },
     {
         name: 'Levothyroxine',
         dose: 50,
         pillsPerDay: 1,
-        stock: 25,
-        prescribed: true
+        stock: 25
     },
     {
         name: 'Levothyroxine',
         dose: 25,
         pillsPerDay: 1, 
-        stock: 30,
-        prescribed: true
+        stock: 30
     }
-]
+] 

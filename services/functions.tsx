@@ -21,3 +21,40 @@ export const runsOut = (numPills: number, numPerDay: number) : string => {
 
     return calculateFutureDate(days);
 }
+
+export const getCurrentStock = (startDate, numPerDay: number, initialStock: number) : number => {
+    const today = new Date();
+    startDate = startDate.toDate();
+    const isFuture = isDateFuture(startDate, today);
+    if (isFuture){
+
+        return initialStock;
+    } 
+    else {
+        const daysSinceStart = getDaysBetweenDates(today, startDate);
+        const currentStock = Math.floor(initialStock - (numPerDay * daysSinceStart));
+        
+        return currentStock;
+    }
+}
+
+const isDateFuture = (date : Date, currentDate : Date) => {
+    const dateTimestamp = date.getTime();
+    const currentTimestamp = currentDate.getTime();
+    const timeDifference = dateTimestamp - currentTimestamp;
+    if (timeDifference > 0){
+        return true
+    } 
+    else if (timeDifference <= 0){
+        return false
+    }
+}
+
+const getDaysBetweenDates = (date1 : Date, date2 : Date) : number => {
+    const timestamp1 = date1.getTime();
+    const timestamp2 = date2.getTime();
+    const differenceInMs = Math.abs(timestamp2 - timestamp1);
+    const daysDifference = Math.ceil(differenceInMs / (1000 * 60 * 60 * 24));
+  
+    return daysDifference;
+  }

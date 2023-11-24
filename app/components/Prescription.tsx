@@ -1,12 +1,16 @@
 import React from 'react'
 import styles from './prescription.module.css'
 import AddPills from './AddPills'
+import { getCurrentStock, runsOut } from '../../services/functions'
 
-const PrescriptionCard = ({ drug, runsOut }) => {
+const PrescriptionCard = ({ drug }) => {
 
-    const { name, dose, pillsPerDay, stock } = drug;
+    const { name, dose, pillsPerDay, initialStock, startDate } = drug;
+
+    const currentStock = getCurrentStock(startDate, pillsPerDay, initialStock);
 
   return (
+
     <div className={styles.prescriptionContainer}>
         <div className={styles.topRow}>
             <h2 className={styles.drugName}>{name} {dose}mg</h2>
@@ -14,8 +18,8 @@ const PrescriptionCard = ({ drug, runsOut }) => {
         </div>
         <div className={styles.bottomRow}>
             <div className={styles.bottomLeft}>
-                <p className={styles.runsOut}>Runs out: {runsOut(stock, pillsPerDay)}</p>
-                <p className={styles.total}>({stock} pill{(stock > 1) ? 's' : ''})</p> 
+                <p className={styles.runsOut}>Runs out: {runsOut(currentStock, pillsPerDay)}</p>
+                <p className={styles.total}>({currentStock} pill{(currentStock > 1) ? 's' : ''})</p> 
             </div>
             <div>
                 <AddPills />

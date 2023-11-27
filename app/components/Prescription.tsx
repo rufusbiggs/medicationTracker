@@ -5,7 +5,7 @@ import { getCurrentStock, runsOut } from '../../services/functions'
 
 const PrescriptionCard = ({ drug }) => {
 
-    const { name, dose, pillsPerDay, initialStock, startDate } = drug;
+    const { name, dose, pillsPerDay, initialStock, startDate, id } = drug;
 
     const currentStock = getCurrentStock(startDate, pillsPerDay, initialStock);
 
@@ -22,7 +22,7 @@ const PrescriptionCard = ({ drug }) => {
                 <p className={styles.total}>({currentStock} pill{(currentStock > 1) ? 's' : ''})</p> 
             </div>
             <div>
-                <AddPills />
+                <AddPills id={id} initialStock={initialStock}/>
             </div>
         </div>
     </div>

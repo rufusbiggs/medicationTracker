@@ -1,7 +1,7 @@
 // firebase testing file
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore"; 
+import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore"; 
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -63,9 +63,10 @@ export const deletePrescription = async (id : string) => {
  * finish off this function below to make the initialStock value + the newStock
  */
 
-export const addStock = async (prescriptionId : string, newStock : number) => {
-  const docRef = await setDoc(doc(db, "prescription", prescriptionId), {
-    initialStock: newStock,
+export const addStock = async (id : string, newStock : number) => {
+  const docRef = doc(db, "prescription", id);
+  await updateDoc(docRef, {
+    initialStock: newStock
   });
 }
 

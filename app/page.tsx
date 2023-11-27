@@ -2,8 +2,9 @@
 import { getPrescriptions } from './firebase/API'
 import PrescriptionCard from './components/Prescription'
 import React from 'react'
-import { calculateFutureDate, daysLeft, runsOut, getCurrentStock } from '../services/functions'
+import { calculateFutureDate, daysLeft, getCurrentStock } from '../services/functions'
 import Link from 'next/link'
+
 
 const PILL_DELIVERY_TIME = 4;
 
@@ -14,7 +15,6 @@ export default async function Home() {
    * const data = await response.json()
   */
   const data : object[] = await getPrescriptions();
-  console.log(data)
 
   const daysUntilPillsRunOut : number[] = data.map(({ initialStock, startDate, pillsPerDay}) => {
     console.log(typeof startDate);

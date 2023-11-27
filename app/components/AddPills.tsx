@@ -2,31 +2,32 @@
 import React, { useState } from 'react'
 import styles from './AddPills.module.css'
 import { addStock } from '../firebase/API'
+import { useRouter } from 'next/router';
 
-const AddPills = () => {
+const AddPills = ({ id, initialStock }) => {
 
-    const [addStock, setAddStock] = useState(false);
+    const [addStockForm, setAddStockForm] = useState(false);
     const [addStockBy, setAddStockBy] = useState(0);
 
     const toggleAddPills = () => {
-        const toggleStock = addStock ? false : true;
-        setAddStock(toggleStock);
+        const toggleStock = addStockForm ? false : true;
+        setAddStockForm(toggleStock);
     }
 
     const handleChange = (e) => {
         setAddStockBy(e.target.value);
     }
 
-    const addPills = () => {
-        e.preventDefault();
+    const addPills = async () => {
         if (addStockBy !== 0){
-            
+            const newStock = Number(addStockBy) + Number(initialStock);
+            addStock(id, newStock);
         }
     }
 
   return (
     <div className={styles.formContainer}>
-        { (addStock) ? 
+        { (addStockForm) ? 
         <form>
             <input 
             type="number"
@@ -37,7 +38,7 @@ const AddPills = () => {
             onChange={handleChange}
             />
             <div className={styles.saveCancel}>
-                <button type="submit" className={styles.save} onClick={addPills} >Add</button>
+                <button type="submit" className={styles.save} onClick={() => addPills()} >Add</button>
                 <button className={styles.cancel} onClick={toggleAddPills}>Cancel</button>
             </div>
         </form>

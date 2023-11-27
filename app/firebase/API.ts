@@ -1,7 +1,7 @@
 // firebase testing file
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs, setDoc, doc } from "firebase/firestore"; 
+import { collection, addDoc, getDocs, setDoc, doc, deleteDoc } from "firebase/firestore"; 
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -31,7 +31,6 @@ interface Prescription {
 export const addData = async (input : Prescription) => {
   try {
     const docRef = await addDoc(collection(db, "prescription"), {
-      id: input.id,
       name: input.name,
       dose: input.dose,
       pillsPerDay: input.pillsPerDay,
@@ -45,15 +44,15 @@ export const addData = async (input : Prescription) => {
 }
 
 export const getPrescriptions = async () => {
-  const outputData : object[] = [];
   const querySnapshot = await getDocs(collection(db, "prescription"));
-  querySnapshot.forEach((doc) => {
-    const prescriptionData = doc.data();
-    outputData.push({...prescriptionData});
-    
-  });
+  const outputData : object[] = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+  
   return outputData;
 }
+
+export const deletePrescription = async (id : string) => {
+  await deleteDoc(doc(db, 'prescription', id))
+};
 
 
 /**

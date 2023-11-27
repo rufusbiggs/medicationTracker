@@ -4,6 +4,8 @@ import { getPrescriptions } from '../firebase/API'
 import React from 'react'
 import styles from './page.module.css'
 import Link from 'next/link'
+import Swal from 'sweetalert2'
+import { deletePrescription } from '../firebase/API'
 
 interface Prescription {
   id: string,
@@ -16,13 +18,25 @@ interface Prescription {
 
 const editPrescriptions = async () => {
 
-  const removePrescription = () => {
+  const removePrescription = (id : string) => {
     // set prescribed to false in database
+    Swal.fire({
+      title: 'Are you sure you want to remove this prescription?',
+      text: `You won't be able to restore this deletion`,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Delete',
+      cancelButtonText: 'Cancel'
+    })
+    .then((result) => {
+      if (result.value) {
+        // delete prescription from database
+        deletePrescription(id);
+      }
+    })
   }
 
   const data = await getPrescriptions();
-  console.log(data);
-
 
   return (
     <>
@@ -36,7 +50,7 @@ const editPrescriptions = async () => {
             <h2 className={styles.drugName}>{drug.name} {drug.dose}mg</h2>
             <p>{drug.pillsPerDay} pill{(drug.pillsPerDay > 1) ? 's' : ''} per day</p>
           </div>
-          <button className={styles.remove} onClick={removePrescription}>Remove</button>
+          <button className={styles.remove} onClick={() => removePrescription(drug.id)} >Remove</button>
         </div>
         )}
       )}

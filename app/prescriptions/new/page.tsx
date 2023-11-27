@@ -15,8 +15,6 @@ const newPrescription = () => {
         startDate: ''
     });
 
-    // const [isFormValid, setIsFormValid] = useState(false);
-
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
@@ -24,14 +22,6 @@ const newPrescription = () => {
           [name]: value,
         }));
       };
-
-    // const checkValidity = () => {
-    //     const {name, dose, pillsPerDay, stock} = formData;
-    //     if (name !== '' && dose !== '' && pillsPerDay !== '' && stock !== '' ){
-    //         setIsFormValid(true); 
-    //     }
-    //     else setIsFormValid(false);
-    // }
 
     const handleSubmit = (e) => {
         e.preventDefault();

@@ -4,7 +4,7 @@ import styles from './AddPills.module.css'
 import { addStock } from '../firebase/API'
 import { useRouter } from 'next/router';
 
-const AddPills = ({ id, initialStock }) => {
+const AddPills = ({ id, initialStock, addedPills }) => {
 
     const [addStockForm, setAddStockForm] = useState(false);
     const [addStockBy, setAddStockBy] = useState(0);
@@ -20,7 +20,7 @@ const AddPills = ({ id, initialStock }) => {
 
     const addPills = async () => {
         if (addStockBy !== 0){
-            const newStock = Number(addStockBy) + Number(initialStock);
+            const newStock = Number(addStockBy);
             addStock(id, newStock);
         }
     }

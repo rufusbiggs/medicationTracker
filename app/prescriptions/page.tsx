@@ -13,7 +13,8 @@ interface Prescription {
   dose: number,
   pillsPerDay: number,
   startDate: Date,
-  initialStock: number
+  initialStock: number,
+  addedPills: number[]
 }
 
 const editPrescriptions = async () => {

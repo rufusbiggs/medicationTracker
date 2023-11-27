@@ -16,9 +16,8 @@ export default async function Home() {
   */
   const data : object[] = await getPrescriptions();
 
-  const daysUntilPillsRunOut : number[] = data.map(({ initialStock, startDate, pillsPerDay}) => {
-    console.log(typeof startDate);
-    const currentStock = getCurrentStock(startDate, pillsPerDay, initialStock);
+  const daysUntilPillsRunOut : number[] = data.map(({ initialStock, addedPills, startDate, pillsPerDay}) => {
+    const currentStock = getCurrentStock(startDate, pillsPerDay, addedPills, initialStock);
     return daysLeft(currentStock, pillsPerDay);
   })
   const daysUntilSoonestDate : number = Math.min(...daysUntilPillsRunOut);
@@ -34,7 +33,7 @@ export default async function Home() {
       </header>
       <main>
         {data.map((drug, index) => 
-          <PrescriptionCard key={`drug-${index}`} drug={drug}/>
+          <PrescriptionCard key={`drug-${index}`} drug={drug} />
         )}
       </main>
       <Link className="edit-link" href='/prescriptions'>Edit Prescriptions</Link>

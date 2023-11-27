@@ -1,7 +1,7 @@
 // firebase testing file
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore"; 
+import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc, arrayUnion } from "firebase/firestore"; 
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -25,10 +25,11 @@ interface Prescription {
   dose: number,
   pillsPerDay: number,
   startDate: Date,
-  initialStock: number
+  initialStock: number,
+  addedPills: number[]
 }
 
-export const addData = async (input : Prescription) => {
+export const addData = async (input) => {
   try {
     const docRef = await addDoc(collection(db, "prescription"), {
       name: input.name,
@@ -36,6 +37,7 @@ export const addData = async (input : Prescription) => {
       pillsPerDay: input.pillsPerDay,
       initialStock: input.initialStock,
       startDate: input.startDate,
+      addedPills: [],
     });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
@@ -65,8 +67,12 @@ export const deletePrescription = async (id : string) => {
 
 export const addStock = async (id : string, newStock : number) => {
   const docRef = doc(db, "prescription", id);
-  await updateDoc(docRef, {
-    initialStock: newStock
-  });
+  try {
+    await updateDoc(docRef, {
+      addedPills: arrayUnion(newStock),
+    });
+  } catch (error) {
+    console.error('Error updating document:', error);
+  }
 }
 

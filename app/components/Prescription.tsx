@@ -3,7 +3,17 @@ import styles from './prescription.module.css'
 import AddPills from './AddPills'
 import { getCurrentStock, runsOut } from '../../services/functions'
 
-const PrescriptionCard = ({ drug }) => {
+interface Prescription {
+    id: string,
+    name: string,
+    dose: number,
+    pillsPerDay: number,
+    startDate: Date,
+    initialStock: number,
+    addedPills: number[]
+  }
+
+const PrescriptionCard: React.FC<{drug: Prescription}> = ({ drug }) => {
 
     const { name, dose, pillsPerDay, addedPills, initialStock, startDate, id } = drug;
 

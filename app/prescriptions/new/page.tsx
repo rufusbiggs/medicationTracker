@@ -1,12 +1,13 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, ChangeEvent, FormEvent } from 'react'
 import styles from './page.module.css'
 import Link from 'next/link'
 import { addData } from '../../firebase/API'
-import { v4 as uuidv4 } from 'uuid';
+import { useRouter } from 'next/navigation'
+
 
 const newPrescription = () => {
-
+    const router = useRouter();
     const [formData, setFormData] = useState({
         name: '',
         dose: '',
@@ -15,7 +16,8 @@ const newPrescription = () => {
         startDate: ''
     });
 
-    const handleChange = (e) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        console.log(e.target);
         const { name, value } = e.target;
         setFormData((prevData) => ({
           ...prevData,
@@ -23,19 +25,20 @@ const newPrescription = () => {
         }));
       };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e : FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const {name, dose, pillsPerDay, stock} = formData;
         if (name !== '' && dose !== '' && pillsPerDay !== '' && stock !== '' ){
-            const databaseInputs = {...formData,
+            const databaseInputs = {
+                name: formData.name,
                 dose: Number(formData.dose),
                 pillsPerDay: Number(formData.pillsPerDay),
                 initialStock: Number(formData.stock),
                 startDate: new Date(formData.startDate),
-                id: uuidv4(),
+                addedPills: []
             }
+            router.push('/');
             addData(databaseInputs);
-            alert("Prescription added to system 😀")
         }
          else {
             alert("Please complete the form!");

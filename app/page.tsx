@@ -1,20 +1,41 @@
 // import { data } from '../services/data'
-import { getPrescriptions } from './firebase/API'
+'use client';
+import { db } from './firebase/API'
 import PrescriptionCard from './components/Prescription'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { calculateFutureDate, daysLeft, getCurrentStock } from '../services/functions'
 import Link from 'next/link'
-
+import { onSnapshot, collection} from "firebase/firestore";
+import { signOut, useSession } from 'next-auth/react';
 
 const PILL_DELIVERY_TIME = 4;
 
-export default async function Home() {
+interface Prescription {
+  id: string;
+  startDate: Date;
+  dose: number;
+  addedPills: number[];
+  initialStock: number;
+  pillsPerDay: number;
+  name: string
+}
 
-  /** fake API call
-   * const response = await fetch('mumsPrescription');
-   * const data = await response.json()
-  */
-  const data : object[] = await getPrescriptions();
+export default function Home() {
+
+  const [data, setData] = useState([]);
+
+  const session = useSession();
+
+  useEffect(() => {
+
+    const unsubscribe = onSnapshot(collection(db, 'prescription'), querySnapshot => {
+      setData(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [])
 
   const daysUntilPillsRunOut : number[] = data.map(({ initialStock, addedPills, startDate, pillsPerDay}) => {
     const currentStock = getCurrentStock(startDate, pillsPerDay, addedPills, initialStock);
@@ -30,6 +51,10 @@ export default async function Home() {
       <header>
         <h1>Medication Tracker</h1>
         <h3>Order Before {soonestDate}</h3>
+        <div>
+          <p>{ session?.data?.user?.name }</p>
+          <button onClick={() => signOut()}>Sign Out</button>
+        </div>
       </header>
       <main>
         {data.map((drug, index) => 

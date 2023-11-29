@@ -1,23 +1,24 @@
 'use client';
 // import { data } from '../../services/data'
-import { getPrescriptions } from '../firebase/API'
-import React from 'react'
+import { getPrescriptions, deletePrescription, db } from '../firebase/API'
+import React, { useState, useEffect} from 'react'
 import styles from './page.module.css'
 import Link from 'next/link'
 import Swal from 'sweetalert2'
-import { deletePrescription } from '../firebase/API'
+import { onSnapshot, collection} from "firebase/firestore";
+
 
 interface Prescription {
-  id: string,
-  name: string,
-  dose: number,
-  pillsPerDay: number,
-  startDate: Date,
-  initialStock: number,
-  addedPills: number[]
+  id: string;
+  startDate: Date;
+  dose: number;
+  addedPills: number[];
+  initialStock: number;
+  pillsPerDay: number;
+  name: string;
 }
 
-const editPrescriptions = async () => {
+const editPrescriptions = () => {
 
   const removePrescription = (id : string) => {
     // set prescribed to false in database
@@ -37,7 +38,21 @@ const editPrescriptions = async () => {
     })
   }
 
-  const data = await getPrescriptions();
+  // const data : Prescription[] = await getPrescriptions();
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+
+    const unsubscribe = onSnapshot(collection(db, 'prescription'), querySnapshot => {
+      setData(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [])
+
 
   return (
     <>

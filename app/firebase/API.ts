@@ -1,7 +1,7 @@
 // firebase testing file
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc, arrayUnion } from "firebase/firestore"; 
+import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc, arrayUnion, onSnapshot } from "firebase/firestore"; 
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -17,10 +17,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 interface Prescription {
-  id: string,
   name: string,
   dose: number,
   pillsPerDay: number,
@@ -29,7 +28,7 @@ interface Prescription {
   addedPills: number[]
 }
 
-export const addData = async (input) => {
+export const addData = async (input : Prescription) => {
   try {
     const docRef = await addDoc(collection(db, "prescription"), {
       name: input.name,
@@ -37,7 +36,7 @@ export const addData = async (input) => {
       pillsPerDay: input.pillsPerDay,
       initialStock: input.initialStock,
       startDate: input.startDate,
-      addedPills: [],
+      addedPills: input.addedPills,
     });
     console.log("Document written with ID: ", docRef.id);
   } catch (e) {
@@ -45,28 +44,32 @@ export const addData = async (input) => {
   }
 }
 
-export const getPrescriptions = async () => {
-  const querySnapshot = await getDocs(collection(db, "prescription"));
-  const outputData : object[] = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
+// export const getPrescriptions = async () => {
+//   const querySnapshot = await getDocs(collection(db, "prescription"));
+//   const outputData : object[] = querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()}));
   
-  return outputData;
-}
+//   return outputData;
+// }
+
+// real time collection data
+// export const getPrescriptions = () => {
+//   onSnapshot(collection(db, 'prescription'), (querySnapshot) => {
+//     const outputData : object[] = querySnapshot.docs.map((doc) => ({
+//       id: doc.id, ...doc.data()
+//     }));
+//     return outputData;
+//   })
+// }
+
 
 export const deletePrescription = async (id : string) => {
   await deleteDoc(doc(db, 'prescription', id))
 };
 
-
-/**
- ******  Figure out how to handle adding stock *****
- * so far I have:
- * handle submit stuff in the addstock form
- * need to:
- * finish off this function below to make the initialStock value + the newStock
- */
-
 export const addStock = async (id : string, newStock : number) => {
   const docRef = doc(db, "prescription", id);
+  console.log(db);
+  console.log(newStock);
   try {
     await updateDoc(docRef, {
       addedPills: arrayUnion(newStock),
@@ -76,3 +79,9 @@ export const addStock = async (id : string, newStock : number) => {
   }
 }
 
+export const realtimeUpdate = (id : string) => {
+  onSnapshot(doc(db, "prescriptions", id), (doc) => {
+    
+    return doc
+  });
+}

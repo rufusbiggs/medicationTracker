@@ -1,6 +1,6 @@
 'use client';
 // import { data } from '../../services/data'
-import { getPrescriptions, deletePrescription, db } from '../firebase/API'
+import { deletePrescription, db } from '../firebase/API'
 import React, { useState, useEffect} from 'react'
 import styles from './page.module.css'
 import Link from 'next/link'

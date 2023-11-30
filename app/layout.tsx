@@ -1,9 +1,9 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import { authOptions } from './pages/api/auth/[...nextauth]'
+import { authOptions } from './pages/api/auth/[...nextauth].ts'
 import SessionProvider from './sessionProvider'
-import Login from './components/login'
+import Login from './components/Login'
 import Home from './page'
 import { getServerSession } from 'next-auth'
 

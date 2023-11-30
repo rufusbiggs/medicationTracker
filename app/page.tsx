@@ -6,7 +6,7 @@ import React, { useState, useEffect } from 'react'
 import { calculateFutureDate, daysLeft, getCurrentStock } from '../services/functions'
 import Link from 'next/link'
 import { onSnapshot, collection} from "firebase/firestore";
-import { signOut, useSession } from 'next-auth/react';
+
 
 const PILL_DELIVERY_TIME = 4;
 
@@ -23,8 +23,6 @@ interface Prescription {
 export default function Home() {
 
   const [data, setData] = useState([]);
-
-  const session = useSession();
 
   useEffect(() => {
 
@@ -51,10 +49,6 @@ export default function Home() {
       <header>
         <h1>Medication Tracker</h1>
         <h3>Order Before {soonestDate}</h3>
-        <div>
-          <p>{ session?.data?.user?.name }</p>
-          <button onClick={() => signOut()}>Sign Out</button>
-        </div>
       </header>
       <main>
         {data.map((drug, index) => 

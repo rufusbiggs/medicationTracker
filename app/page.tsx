@@ -1,24 +1,42 @@
 // import { data } from '../services/data'
-import { getPrescriptions } from './firebase/API'
+'use client';
+import { db } from './firebase/API'
 import PrescriptionCard from './components/Prescription'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { calculateFutureDate, daysLeft, getCurrentStock } from '../services/functions'
 import Link from 'next/link'
+import { onSnapshot, collection} from "firebase/firestore";
 
 
 const PILL_DELIVERY_TIME = 4;
 
-export default async function Home() {
+interface Prescription {
+  id: string;
+  startDate: Date;
+  dose: number;
+  addedPills: number[];
+  initialStock: number;
+  pillsPerDay: number;
+  name: string
+}
 
-  /** fake API call
-   * const response = await fetch('mumsPrescription');
-   * const data = await response.json()
-  */
-  const data : object[] = await getPrescriptions();
+export default function Home() {
 
-  const daysUntilPillsRunOut : number[] = data.map(({ initialStock, startDate, pillsPerDay}) => {
-    console.log(typeof startDate);
-    const currentStock = getCurrentStock(startDate, pillsPerDay, initialStock);
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+
+    const unsubscribe = onSnapshot(collection(db, 'prescription'), querySnapshot => {
+      setData(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    })
+
+    return () => {
+      unsubscribe()
+    }
+  }, [])
+
+  const daysUntilPillsRunOut : number[] = data.map(({ initialStock, addedPills, startDate, pillsPerDay}) => {
+    const currentStock = getCurrentStock(startDate, pillsPerDay, addedPills, initialStock);
     return daysLeft(currentStock, pillsPerDay);
   })
   const daysUntilSoonestDate : number = Math.min(...daysUntilPillsRunOut);
@@ -34,7 +52,7 @@ export default async function Home() {
       </header>
       <main>
         {data.map((drug, index) => 
-          <PrescriptionCard key={`drug-${index}`} drug={drug}/>
+          <PrescriptionCard key={`drug-${index}`} drug={drug} />
         )}
       </main>
       <Link className="edit-link" href='/prescriptions'>Edit Prescriptions</Link>

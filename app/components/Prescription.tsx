@@ -3,11 +3,21 @@ import styles from './prescription.module.css'
 import AddPills from './AddPills'
 import { getCurrentStock, runsOut } from '../../services/functions'
 
-const PrescriptionCard = ({ drug }) => {
+interface Prescription {
+    id: string,
+    name: string,
+    dose: number,
+    pillsPerDay: number,
+    startDate: Date,
+    initialStock: number,
+    addedPills: number[]
+  }
 
-    const { name, dose, pillsPerDay, initialStock, startDate, id } = drug;
+const PrescriptionCard: React.FC<{drug: Prescription}> = ({ drug }) => {
 
-    const currentStock = getCurrentStock(startDate, pillsPerDay, initialStock);
+    const { name, dose, pillsPerDay, addedPills, initialStock, startDate, id } = drug;
+
+    const currentStock = getCurrentStock(startDate, pillsPerDay, addedPills, initialStock);
 
   return (
 
@@ -22,7 +32,7 @@ const PrescriptionCard = ({ drug }) => {
                 <p className={styles.total}>({currentStock} pill{(currentStock > 1) ? 's' : ''})</p> 
             </div>
             <div>
-                <AddPills id={id} initialStock={initialStock}/>
+                <AddPills id={id} initialStock={initialStock} addedPills={addedPills}/>
             </div>
         </div>
     </div>

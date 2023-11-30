@@ -1,10 +1,9 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useState, ChangeEvent } from 'react'
 import styles from './AddPills.module.css'
 import { addStock } from '../firebase/API'
-import { useRouter } from 'next/router';
 
-const AddPills = ({ id, initialStock }) => {
+const AddPills : React.FC<{id: string, initialStock: number, addedPills: number[]}> = ({ id, initialStock, addedPills }) => {
 
     const [addStockForm, setAddStockForm] = useState(false);
     const [addStockBy, setAddStockBy] = useState(0);
@@ -14,14 +13,16 @@ const AddPills = ({ id, initialStock }) => {
         setAddStockForm(toggleStock);
     }
 
-    const handleChange = (e) => {
-        setAddStockBy(e.target.value);
+    const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+        setAddStockBy(Number(e.target.value));
     }
 
-    const addPills = async () => {
+    const addPills = () => {
         if (addStockBy !== 0){
-            const newStock = Number(addStockBy) + Number(initialStock);
-            addStock(id, newStock);
+            const newStock = Number(addStockBy);
+            addStock(id, newStock)
+            setAddStockBy(0);
+            setAddStockForm(false);
         }
     }
 
@@ -38,7 +39,10 @@ const AddPills = ({ id, initialStock }) => {
             onChange={handleChange}
             />
             <div className={styles.saveCancel}>
-                <button type="submit" className={styles.save} onClick={() => addPills()} >Add</button>
+                <button type="submit" className={styles.save} onClick={(e) => {
+                    e.preventDefault();
+                    addPills();
+                    }} >Add</button>
                 <button className={styles.cancel} onClick={toggleAddPills}>Cancel</button>
             </div>
         </form>

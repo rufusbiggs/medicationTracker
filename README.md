@@ -4,12 +4,22 @@
 
 It allows users to input prescriptions with drug types, doses, stock levels and start dates. Using this information it acts as a calculator and reminder for the user notify them when their prescription stock levels are running out.
 
-## Technologies Used
+The app consists of the following screens:
 
-- Typescript
-- Next.js project bootstrapped with 'create-next-app'
-- Google Firebase
--   Auth and Firestore
+* Login
+* Home
+  * Order by date (4 days before running out to account for delivery)
+  * Prescription cards which contain summary and 'add stock' feature
+* Edit Prescriptions
+  * Allows user to remove current prescriptions
+* Add Prescription
+  * Allows user to create a new presctiption
+
+### Technologies Used
+
+* Typescript
+* Next.js project bootstrapped with 'create-next-app'
+* Google Firebase (Auth and Firestore)
   
 
 

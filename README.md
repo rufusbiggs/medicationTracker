@@ -1,3 +1,32 @@
+# Medication Tracker
+
+**Web application aiming to reduce stress around tracking stock levels of prescription medications for inidividuals**
+
+It allows users to input prescriptions with drug types, doses, stock levels and start dates. Using this information it acts as a calculator and reminder for the user notify them when their prescription stock levels are running out.
+
+The app consists of the following screens:
+
+**Login**
+
+**Home**
+* Order by date (4 days before running out to account for delivery)
+* Prescription cards which contain summary and 'add stock' feature
+
+**Edit Prescriptions**
+* Allows user to remove current prescriptions
+
+**Add Prescription**
+* Allows user to create a new presctiption
+
+## Technologies Used
+
+* Typescript
+* Next.js project bootstrapped with 'create-next-app'
+* Google Firebase (Auth and Firestore)
+  
+
+
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started

@@ -5,7 +5,6 @@ import React, { useState, useEffect } from 'react'
 import { calculateFutureDate, daysLeft, getCurrentStock } from '../services/functions'
 import Link from 'next/link'
 import { onSnapshot, collection} from "firebase/firestore";
-import { auth, googleAuthProvider } from './firebase/API';
 
 
 const PILL_DELIVERY_TIME = 4;

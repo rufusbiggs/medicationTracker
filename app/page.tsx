@@ -1,4 +1,3 @@
-// import { data } from '../services/data'
 'use client';
 import { db } from './firebase/API'
 import PrescriptionCard from './components/Prescription'
@@ -6,6 +5,7 @@ import React, { useState, useEffect } from 'react'
 import { calculateFutureDate, daysLeft, getCurrentStock } from '../services/functions'
 import Link from 'next/link'
 import { onSnapshot, collection} from "firebase/firestore";
+import { auth, googleAuthProvider } from './firebase/API';
 
 
 const PILL_DELIVERY_TIME = 4;
@@ -21,6 +21,8 @@ interface Prescription {
 }
 
 export default function Home() {
+
+  const user = null;
 
   const [data, setData] = useState([]);
 
@@ -46,16 +48,23 @@ export default function Home() {
 
   return (
     <>
-      <header>
-        <h1>Medication Tracker</h1>
-        <h3>Order Before {soonestDate}</h3>
-      </header>
-      <main>
-        {data.map((drug, index) => 
-          <PrescriptionCard key={`drug-${index}`} drug={drug} />
-        )}
-      </main>
-      <Link className="edit-link" href='/prescriptions'>Edit Prescriptions</Link>
+      {user ? 
+      <button>Login</button>
+      :
+      (
+      <>
+        <header>
+          <h1>Medication Tracker</h1>
+          <h3>Order Before {soonestDate}</h3>
+        </header>
+        <main>
+          {data.map((drug, index) => 
+            <PrescriptionCard key={`drug-${index}`} drug={drug} />
+          )}
+        </main>
+        <Link className="edit-link" href='/prescriptions'>Edit Prescriptions</Link>
+      </>
+      )}
     </>
   )
 }

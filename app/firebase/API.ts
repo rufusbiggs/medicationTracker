@@ -2,7 +2,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { collection, addDoc, updateDoc, doc, deleteDoc, arrayUnion, onSnapshot } from "firebase/firestore"; 
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -19,9 +18,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 // Initialize Cloud Firestore and get a reference to the service
 export const db = getFirestore(app);
-// Initialise authentication
-// export const auth = getAuth();
-// export const googleAuthProvider = new GoogleAuthProvider();
 
 interface Prescription {
   name: string,

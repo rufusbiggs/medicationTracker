@@ -1,5 +1,4 @@
 'use client';
-// import { data } from '../../services/data'
 import { deletePrescription, db } from '../firebase/API'
 import React, { useState, useEffect} from 'react'
 import styles from './page.module.css'
@@ -38,14 +37,12 @@ const EditPrescriptions = () => {
     })
   }
 
-  // const data : Prescription[] = await getPrescriptions();
-
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Prescription[]>([]);
 
   useEffect(() => {
 
     const unsubscribe = onSnapshot(collection(db, 'prescription'), querySnapshot => {
-      setData(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      setData(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Prescription )));
     })
 
     return () => {

@@ -22,7 +22,7 @@ export const runsOut = (numPills: number, numPerDay: number) : string => {
     return calculateFutureDate(days);
 }
 
-export const getCurrentStock = (startDate, numPerDay: number, addedPills : number[], initialStock: number) : number => {
+export const getCurrentStock = (startDate : any, numPerDay: number, addedPills : number[], initialStock: number) : number => {
     const today = new Date();
     startDate = startDate.toDate();
     const isFuture = isDateFuture(startDate, today);

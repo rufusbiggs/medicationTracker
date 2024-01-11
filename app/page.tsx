@@ -23,12 +23,12 @@ export default function Home() {
 
   const user = null;
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<Prescription[]>([]);
 
   useEffect(() => {
 
     const unsubscribe = onSnapshot(collection(db, 'prescription'), querySnapshot => {
-      setData(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+      setData(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Prescription )));
     })
 
     return () => {

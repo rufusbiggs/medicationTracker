@@ -18,7 +18,7 @@ interface Prescription {
   name: string;
 }
 
-const editPrescriptions = () => {
+const EditPrescriptions = () => {
 
   const removePrescription = (id : string) => {
     // set prescribed to false in database
@@ -75,4 +75,4 @@ const editPrescriptions = () => {
   )
 }
 
-export default editPrescriptions
+export default EditPrescriptions

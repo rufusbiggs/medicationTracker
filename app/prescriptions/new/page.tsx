@@ -6,7 +6,7 @@ import { addData } from '../../firebase/API'
 import { useRouter } from 'next/navigation'
 
 
-const newPrescription = () => {
+const NewPrescription = () => {
     const router = useRouter();
     const [formData, setFormData] = useState({
         name: '',
@@ -121,4 +121,4 @@ const newPrescription = () => {
   )
 }
 
-export default newPrescription
+export default NewPrescription
